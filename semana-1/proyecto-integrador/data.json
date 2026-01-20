@@ -10,7 +10,8 @@
     "rating": 4.5,
     "stock": 15,
     "disponible": true,
-    "marca": "Dell"
+    "marca": "Dell",
+    "imagen": "https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?q=80&w=800&auto=format&fit=crop"
   },
   {
     "id": 2,
@@ -23,7 +24,8 @@
     "rating": 5,
     "stock": 50,
     "disponible": true,
-    "marca": "Logitech"
+    "marca": "Logitech",
+    "imagen": "https://images.unsplash.com/photo-1615663248589-195c689bb721?q=80&w=800&auto=format&fit=crop"
   },
   {
     "id": 3,
@@ -36,7 +38,8 @@
     "rating": 4.8,
     "stock": 25,
     "disponible": true,
-    "marca": "Corsair"
+    "marca": "Corsair",
+    "imagen": "https://images.unsplash.com/photo-1511467687858-23d96c32e4ae?q=80&w=800&auto=format&fit=crop"
   },
   {
     "id": 4,
@@ -49,7 +52,8 @@
     "rating": 4.6,
     "stock": 10,
     "disponible": true,
-    "marca": "Samsung"
+    "marca": "Samsung",
+    "imagen": "https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?q=80&w=800&auto=format&fit=crop"
   },
   {
     "id": 5,
@@ -62,7 +66,8 @@
     "rating": 4.9,
     "stock": 0,
     "disponible": false,
-    "marca": "Sony"
+    "marca": "Sony",
+    "imagen": "https://images.unsplash.com/photo-1618366712010-f4ae9c647dcb?q=80&w=800&auto=format&fit=crop"
   },
   {
     "id": 6,
@@ -75,7 +80,8 @@
     "rating": 4.3,
     "stock": 100,
     "disponible": true,
-    "marca": "Nike"
+    "marca": "Nike",
+    "imagen": "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?q=80&w=800&auto=format&fit=crop"
   },
   {
     "id": 7,
@@ -88,7 +94,8 @@
     "rating": 4.7,
     "stock": 30,
     "disponible": true,
-    "marca": "Adidas"
+    "marca": "Adidas",
+    "imagen": "https://images.unsplash.com/photo-1587563871167-1ee9c731aefb?q=80&w=800&auto=format&fit=crop"
   },
   {
     "id": 8,
@@ -101,7 +108,8 @@
     "rating": 4.5,
     "stock": 60,
     "disponible": true,
-    "marca": "Levi's"
+    "marca": "Levi's",
+    "imagen": "https://images.unsplash.com/photo-1542272604-787c3835535d?q=80&w=800&auto=format&fit=crop"
   },
   {
     "id": 9,
@@ -114,7 +122,8 @@
     "rating": 4.4,
     "stock": 20,
     "disponible": true,
-    "marca": "Nespresso"
+    "marca": "Nespresso",
+    "imagen": "https://images.unsplash.com/photo-1517668808822-9ebb02f2a0e6?q=80&w=800&auto=format&fit=crop"
   },
   {
     "id": 10,
@@ -127,7 +136,8 @@
     "rating": 4.8,
     "stock": 8,
     "disponible": true,
-    "marca": "Dyson"
+    "marca": "Dyson",
+    "imagen": "https://images.unsplash.com/photo-1558317374-067fb5f30001?q=80&w=800&auto=format&fit=crop"
   },
   {
     "id": 11,
@@ -140,7 +150,8 @@
     "rating": 4.9,
     "stock": 12,
     "disponible": true,
-    "marca": "Apple"
+    "marca": "Apple",
+    "imagen": "https://images.unsplash.com/photo-1678911820864-e2c567c655d7?q=80&w=800&auto=format&fit=crop"
   },
   {
     "id": 12,
@@ -153,7 +164,8 @@
     "rating": 4.7,
     "stock": 18,
     "disponible": true,
-    "marca": "Samsung"
+    "marca": "Samsung",
+    "imagen": "https://images.unsplash.com/photo-1678911790865-eaa3c304825d?q=80&w=800&auto=format&fit=crop"
   },
   {
     "id": 13,
@@ -166,7 +178,8 @@
     "rating": 4.6,
     "stock": 22,
     "disponible": true,
-    "marca": "Apple"
+    "marca": "Apple",
+    "imagen": "https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?q=80&w=800&auto=format&fit=crop"
   },
   {
     "id": 14,
@@ -179,7 +192,8 @@
     "rating": 4.8,
     "stock": 35,
     "disponible": true,
-    "marca": "Apple"
+    "marca": "Apple",
+    "imagen": "https://images.unsplash.com/photo-1546868871-7041f2a55e12?q=80&w=800&auto=format&fit=crop"
   },
   {
     "id": 15,
@@ -192,7 +206,8 @@
     "rating": 4.9,
     "stock": 5,
     "disponible": true,
-    "marca": "Canon"
+    "marca": "Canon",
+    "imagen": "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?q=80&w=800&auto=format&fit=crop"
   },
   {
     "id": 16,
@@ -205,7 +220,8 @@
     "rating": 4.4,
     "stock": 15,
     "disponible": true,
-    "marca": "HP"
+    "marca": "HP",
+    "imagen": "https://images.unsplash.com/photo-1612815154858-60aa4c59eaa6?q=80&w=800&auto=format&fit=crop"
   },
   {
     "id": 17,
@@ -218,7 +234,8 @@
     "rating": 4.5,
     "stock": 40,
     "disponible": true,
-    "marca": "TP-Link"
+    "marca": "TP-Link",
+    "imagen": "https://images.unsplash.com/photo-1544197150-b99a580bb7a8?q=80&w=800&auto=format&fit=crop"
   },
   {
     "id": 18,
@@ -231,7 +248,8 @@
     "rating": 4.6,
     "stock": 70,
     "disponible": true,
-    "marca": "Western Digital"
+    "marca": "Western Digital",
+    "imagen": "https://images.unsplash.com/photo-1531062991700-4034714e10ad?q=80&w=800&auto=format&fit=crop"
   },
   {
     "id": 19,
@@ -244,7 +262,8 @@
     "rating": 4.7,
     "stock": 0,
     "disponible": false,
-    "marca": "Logitech"
+    "marca": "Logitech",
+    "imagen": "https://images.unsplash.com/photo-1626244101211-1639d6756285?q=80&w=800&auto=format&fit=crop"
   },
   {
     "id": 20,
@@ -257,7 +276,8 @@
     "rating": 4.8,
     "stock": 28,
     "disponible": true,
-    "marca": "Blue"
+    "marca": "Blue",
+    "imagen": "https://images.unsplash.com/photo-1590602847861-f357a9332bbc?q=80&w=800&auto=format&fit=crop"
   },
   {
     "id": 21,
@@ -270,7 +290,8 @@
     "rating": 4.2,
     "stock": 80,
     "disponible": true,
-    "marca": "Puma"
+    "marca": "Puma",
+    "imagen": "https://images.unsplash.com/photo-1556821840-3a63f95609a7?q=80&w=800&auto=format&fit=crop"
   },
   {
     "id": 22,
@@ -283,7 +304,8 @@
     "rating": 4.9,
     "stock": 25,
     "disponible": true,
-    "marca": "The North Face"
+    "marca": "The North Face",
+    "imagen": "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?q=80&w=800&auto=format&fit=crop"
   },
   {
     "id": 23,
@@ -296,7 +318,8 @@
     "rating": 4.4,
     "stock": 90,
     "disponible": true,
-    "marca": "Under Armour"
+    "marca": "Under Armour",
+    "imagen": "https://images.unsplash.com/photo-1591195853828-11db59a44f6b?q=80&w=800&auto=format&fit=crop"
   },
   {
     "id": 24,
@@ -309,7 +332,8 @@
     "rating": 4.1,
     "stock": 150,
     "disponible": true,
-    "marca": "Nike"
+    "marca": "Nike",
+    "imagen": "https://images.unsplash.com/photo-1588850561407-ed78c282e89b?q=80&w=800&auto=format&fit=crop"
   },
   {
     "id": 25,
@@ -322,7 +346,8 @@
     "rating": 4.3,
     "stock": 200,
     "disponible": true,
-    "marca": "Stance"
+    "marca": "Stance",
+    "imagen": "https://images.unsplash.com/photo-1586350977771-b3b0abd50c82?q=80&w=800&auto=format&fit=crop"
   },
   {
     "id": 26,
@@ -335,7 +360,8 @@
     "rating": 4.6,
     "stock": 45,
     "disponible": true,
-    "marca": "Herschel"
+    "marca": "Herschel",
+    "imagen": "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?q=80&w=800&auto=format&fit=crop"
   },
   {
     "id": 27,
@@ -348,7 +374,8 @@
     "rating": 4.8,
     "stock": 30,
     "disponible": true,
-    "marca": "Casio"
+    "marca": "Casio",
+    "imagen": "https://images.unsplash.com/photo-1522338242992-e1a54906a8da?q=80&w=800&auto=format&fit=crop"
   },
   {
     "id": 28,
@@ -361,7 +388,8 @@
     "rating": 4.7,
     "stock": 0,
     "disponible": false,
-    "marca": "Ray-Ban"
+    "marca": "Ray-Ban",
+    "imagen": "https://images.unsplash.com/photo-1473496169904-658ba7c44d8a?q=80&w=800&auto=format&fit=crop"
   },
   {
     "id": 29,
@@ -374,7 +402,8 @@
     "rating": 4.2,
     "stock": 65,
     "disponible": true,
-    "marca": "Levi's"
+    "marca": "Levi's",
+    "imagen": "https://images.unsplash.com/photo-1624222247344-550fb8ecf7c4?q=80&w=800&auto=format&fit=crop"
   },
   {
     "id": 30,
@@ -387,7 +416,8 @@
     "rating": 4.0,
     "stock": 110,
     "disponible": true,
-    "marca": "Nike"
+    "marca": "Nike",
+    "imagen": "https://images.unsplash.com/photo-1516431945163-09559e217277?q=80&w=800&auto=format&fit=crop"
   },
   {
     "id": 31,
@@ -400,7 +430,8 @@
     "rating": 4.6,
     "stock": 12,
     "disponible": true,
-    "marca": "DXRacer"
+    "marca": "DXRacer",
+    "imagen": "https://images.unsplash.com/photo-1598550476439-6847785fce66?q=80&w=800&auto=format&fit=crop"
   },
   {
     "id": 32,
@@ -413,7 +444,8 @@
     "rating": 4.5,
     "stock": 8,
     "disponible": true,
-    "marca": "IKEA"
+    "marca": "IKEA",
+    "imagen": "https://images.unsplash.com/photo-1518455027359-f3f8164ba6bd?q=80&w=800&auto=format&fit=crop"
   },
   {
     "id": 33,
@@ -426,7 +458,8 @@
     "rating": 4.7,
     "stock": 55,
     "disponible": true,
-    "marca": "Philips"
+    "marca": "Philips",
+    "imagen": "https://images.unsplash.com/photo-1534073828943-f801091bb18c?q=80&w=800&auto=format&fit=crop"
   },
   {
     "id": 34,
@@ -439,7 +472,8 @@
     "rating": 4.4,
     "stock": 10,
     "disponible": true,
-    "marca": "Dyson"
+    "marca": "Dyson",
+    "imagen": "https://images.unsplash.com/photo-1591294100785-81d39c66398a?q=80&w=800&auto=format&fit=crop"
   },
   {
     "id": 35,
@@ -452,7 +486,8 @@
     "rating": 4.6,
     "stock": 18,
     "disponible": true,
-    "marca": "Xiaomi"
+    "marca": "Xiaomi",
+    "imagen": "https://images.unsplash.com/photo-1585771724684-2827dfef38a5?q=80&w=800&auto=format&fit=crop"
   },
   {
     "id": 36,
@@ -465,7 +500,8 @@
     "rating": 4.3,
     "stock": 42,
     "disponible": true,
-    "marca": "Levoit"
+    "marca": "Levoit",
+    "imagen": "https://images.unsplash.com/photo-1596439221142-32694157501e?q=80&w=800&auto=format&fit=crop"
   },
   {
     "id": 37,
@@ -478,7 +514,8 @@
     "rating": 4.5,
     "stock": 28,
     "disponible": true,
-    "marca": "Withings"
+    "marca": "Withings",
+    "imagen": "https://images.unsplash.com/photo-1515377905703-c4788e51af15?q=80&w=800&auto=format&fit=crop"
   },
   {
     "id": 38,
@@ -491,7 +528,8 @@
     "rating": 4.6,
     "stock": 0,
     "disponible": false,
-    "marca": "Braun"
+    "marca": "Braun",
+    "imagen": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?q=80&w=800&auto=format&fit=crop"
   },
   {
     "id": 39,
@@ -504,7 +542,8 @@
     "rating": 4.7,
     "stock": 6,
     "disponible": true,
-    "marca": "Tempur"
+    "marca": "Tempur",
+    "imagen": "https://images.unsplash.com/photo-1505693419148-ad3097f98751?q=80&w=800&auto=format&fit=crop"
   },
   {
     "id": 40,
@@ -517,7 +556,8 @@
     "rating": 4.4,
     "stock": 75,
     "disponible": true,
-    "marca": "Tempur"
+    "marca": "Tempur",
+    "imagen": "https://images.unsplash.com/photo-1595113316349-9fa4eb24f884?q=80&w=800&auto=format&fit=crop"
   },
   {
     "id": 41,
@@ -530,7 +570,8 @@
     "rating": 5.0,
     "stock": 100,
     "disponible": true,
-    "marca": "Sudamericana"
+    "marca": "Sudamericana",
+    "imagen": "https://images.unsplash.com/photo-1544947950-fa07a98d237f?q=80&w=800&auto=format&fit=crop"
   },
   {
     "id": 42,
@@ -543,7 +584,8 @@
     "rating": 4.9,
     "stock": 85,
     "disponible": true,
-    "marca": "Debate"
+    "marca": "Debate",
+    "imagen": "https://images.unsplash.com/photo-1589998059171-988d887df646?q=80&w=800&auto=format&fit=crop"
   },
   {
     "id": 43,
@@ -556,7 +598,8 @@
     "rating": 4.8,
     "stock": 150,
     "disponible": true,
-    "marca": "Salamandra"
+    "marca": "Salamandra",
+    "imagen": "https://images.unsplash.com/photo-1512820790803-83ca734da794?q=80&w=800&auto=format&fit=crop"
   },
   {
     "id": 44,
@@ -569,7 +612,8 @@
     "rating": 4.7,
     "stock": 60,
     "disponible": true,
-    "marca": "Paidós"
+    "marca": "Paidós",
+    "imagen": "https://images.unsplash.com/photo-1543004218-ee14110497f9?q=80&w=800&auto=format&fit=crop"
   },
   {
     "id": 45,
@@ -582,7 +626,8 @@
     "rating": 4.9,
     "stock": 35,
     "disponible": true,
-    "marca": "Prentice Hall"
+    "marca": "Prentice Hall",
+    "imagen": "https://images.unsplash.com/photo-1515879218367-8466d910aaa4?q=80&w=800&auto=format&fit=crop"
   },
   {
     "id": 46,
@@ -595,7 +640,8 @@
     "rating": 4.8,
     "stock": 0,
     "disponible": false,
-    "marca": "Debolsillo"
+    "marca": "Debolsillo",
+    "imagen": "https://images.unsplash.com/photo-1541963463532-d68292c34b19?q=80&w=800&auto=format&fit=crop"
   },
   {
     "id": 47,
@@ -608,7 +654,8 @@
     "rating": 4.6,
     "stock": 95,
     "disponible": true,
-    "marca": "Planeta"
+    "marca": "Planeta",
+    "imagen": "https://images.unsplash.com/photo-1495446815901-a7297e633e8d?q=80&w=800&auto=format&fit=crop"
   },
   {
     "id": 48,
@@ -621,7 +668,8 @@
     "rating": 4.7,
     "stock": 48,
     "disponible": true,
-    "marca": "Plataforma"
+    "marca": "Plataforma",
+    "imagen": "https://images.unsplash.com/photo-1497633762265-9d179a990aa6?q=80&w=800&auto=format&fit=crop"
   },
   {
     "id": 49,
@@ -634,7 +682,8 @@
     "rating": 4.8,
     "stock": 40,
     "disponible": true,
-    "marca": "Crown Business"
+    "marca": "Crown Business",
+    "imagen": "https://images.unsplash.com/photo-1553729459-efe14ef6055d?q=80&w=800&auto=format&fit=crop"
   },
   {
     "id": 50,
@@ -647,6 +696,7 @@
     "rating": 4.6,
     "stock": 22,
     "disponible": true,
-    "marca": "O'Reilly"
+    "marca": "O'Reilly",
+    "imagen": "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?q=80&w=800&auto=format&fit=crop"
   }
 ]
