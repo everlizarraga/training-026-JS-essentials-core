@@ -1,0 +1,265 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  background: white;
+  border-radius: 12px;
+  padding: 30px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+header {
+  text-align: center;
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 2px solid #667eea;
+}
+
+header h1 {
+  color: #667eea;
+  margin-bottom: 10px;
+}
+
+header p {
+  color: #666;
+}
+
+section {
+  margin-bottom: 30px;
+  padding: 20px;
+  background: #f8f9fa;
+  border-radius: 8px;
+}
+
+h2 {
+  color: #333;
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #667eea;
+}
+
+/* FILTROS */
+.filtros-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+}
+
+.filtro {
+  display: flex;
+  flex-direction: column;
+}
+
+.filtro label {
+  margin-bottom: 5px;
+  font-weight: 600;
+  color: #555;
+}
+
+.filtro input,
+.filtro select {
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.filtro button {
+  padding: 10px;
+  background: #667eea;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+  margin-top: auto;
+}
+
+.filtro button:hover {
+  background: #5568d3;
+}
+
+/* ESTADÍSTICAS */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.stat-card {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.stat-card h3 {
+  color: #666;
+  font-size: 14px;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.stat-card p {
+  color: #667eea;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.categorias-stats {
+  background: white;
+  padding: 15px;
+  border-radius: 8px;
+}
+
+.categorias-stats h3 {
+  margin-bottom: 10px;
+  color: #333;
+  font-size: 16px;
+}
+
+#categoriasList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.categoria-badge {
+  padding: 8px 15px;
+  background: #667eea;
+  color: white;
+  border-radius: 20px;
+  font-size: 14px;
+}
+
+/* BÚSQUEDA */
+.busqueda-grid {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 20px;
+}
+
+.busqueda-grid input {
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin-right: 10px;
+}
+
+.busqueda-grid button {
+  padding: 8px 20px;
+  background: #667eea;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.busqueda-grid button:hover {
+  background: #5568d3;
+}
+
+#resultadoBusqueda {
+  background: white;
+  padding: 15px;
+  border-radius: 8px;
+  min-height: 60px;
+}
+
+/* ORDENAMIENTO */
+.orden-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+
+.orden-grid label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 600;
+  color: #555;
+}
+
+.orden-grid select {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+/* RESULTADOS */
+#contadorResultados {
+  margin-bottom: 15px;
+  font-weight: 600;
+  color: #666;
+}
+
+.tabla-container {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+thead {
+  background: #667eea;
+  color: white;
+}
+
+th,
+td {
+  padding: 12px;
+  text-align: left;
+}
+
+tbody tr:nth-child(even) {
+  background: #f8f9fa;
+}
+
+tbody tr:hover {
+  background: #e9ecef;
+}
+
+.rating {
+  color: #ffc107;
+}
+
+.stock-disponible {
+  color: #28a745;
+  font-weight: 600;
+}
+
+.stock-agotado {
+  color: #dc3545;
+  font-weight: 600;
+}
+
+.descuento {
+  background: #28a745;
+  color: white;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  margin-left: 5px;
+}

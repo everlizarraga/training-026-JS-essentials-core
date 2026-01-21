@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Data Transformer & Analyzer</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+  <div class="container">
+    <!-- HEADER -->
+    <header>
+      <h1>📊 Data Transformer & Analyzer</h1>
+      <p>Herramienta de análisis de productos</p>
+    </header>
+
+    <!-- FILTROS -->
+    <section class="filtros">
+      <h2>Filtros</h2>
+      <div class="filtros-grid">
+        <div class="filtro">
+          <label for="categoriaFiltro">Categoría:</label>
+          <select id="categoriaFiltro">
+            <option value="todas">Todas</option>
+            <!-- Opciones dinámicas -->
+          </select>
+        </div>
+
+        <div class="filtro">
+          <label for="precioMin">Precio mín:</label>
+          <input type="number" id="precioMin" placeholder="$0" min="0">
+        </div>
+
+        <div class="filtro">
+          <label for="precioMax">Precio máx:</label>
+          <input type="number" id="precioMax" placeholder="$9999" min="0">
+        </div>
+
+        <div class="filtro">
+          <label for="ratingMin">Rating mínimo:</label>
+          <select id="ratingMin">
+            <option value="0">Todos</option>
+            <option value="3">3+ ⭐</option>
+            <option value="4">4+ ⭐</option>
+            <option value="4.5">4.5+ ⭐</option>
+          </select>
+        </div>
+
+        <div class="filtro">
+          <label for="stockDisponible">Solo con stock:</label>
+          <input type="checkbox" id="stockDisponible">
+        </div>
+
+        <div class="filtro">
+          <button id="limpiarFiltros">Limpiar Filtros</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ESTADÍSTICAS -->
+    <section class="estadisticas">
+      <h2>Estadísticas</h2>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <h3>Total Productos</h3>
+          <p id="statTotal">0</p>
+        </div>
+        <div class="stat-card">
+          <h3>Precio Promedio</h3>
+          <p id="statPromedio">$0</p>
+        </div>
+        <div class="stat-card">
+          <h3>Precio Máximo</h3>
+          <p id="statMax">$0</p>
+        </div>
+        <div class="stat-card">
+          <h3>Precio Mínimo</h3>
+          <p id="statMin">$0</p>
+        </div>
+      </div>
+
+      <div class="categorias-stats">
+        <h3>Productos por Categoría</h3>
+        <div id="categoriasList"></div>
+      </div>
+    </section>
+
+    <!-- BÚSQUEDA -->
+    <section class="busqueda">
+      <h2>Búsqueda</h2>
+      <div class="busqueda-grid">
+        <div>
+          <label for="buscarId">Buscar por ID:</label>
+          <input type="number" id="buscarId" placeholder="Ej: 5">
+          <button id="btnBuscar">Buscar</button>
+        </div>
+        <div id="resultadoBusqueda"></div>
+      </div>
+    </section>
+
+    <!-- ORDENAMIENTO -->
+    <section class="ordenamiento">
+      <h2>Ordenamiento</h2>
+      <div class="orden-grid">
+        <div>
+          <label for="ordenarPor">Ordenar por:</label>
+          <select id="ordenarPor">
+            <option value="ninguno">Sin ordenar</option>
+            <option value="precio">Precio</option>
+            <option value="rating">Rating</option>
+            <option value="nombre">Nombre</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="ordenDireccion">Dirección:</label>
+          <select id="ordenDireccion">
+            <option value="asc">Ascendente</option>
+            <option value="desc">Descendente</option>
+          </select>
+        </div>
+      </div>
+    </section>
+
+    <!-- RESULTADOS -->
+    <section class="resultados">
+      <h2>Resultados</h2>
+      <p id="contadorResultados">Mostrando 0 de 0 productos</p>
+
+      <div class="tabla-container">
+        <table id="tablaProductos">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Nombre</th>
+              <th>Categoría</th>
+              <th>Precio</th>
+              <th>Rating</th>
+              <th>Stock</th>
+            </tr>
+          </thead>
+          <tbody id="tbody">
+            <!-- Productos dinámicos -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+
+</html>
