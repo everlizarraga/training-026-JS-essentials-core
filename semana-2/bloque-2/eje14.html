@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>Custom Events</title>
+  <style>
+    .notificaciones {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      width: 300px;
+    }
+
+    .notificacion {
+      padding: 15px;
+      margin-bottom: 10px;
+      border-radius: 5px;
+      color: white;
+    }
+
+    .notificacion.info {
+      background: blue;
+    }
+
+    .notificacion.success {
+      background: green;
+    }
+
+    .notificacion.error {
+      background: red;
+    }
+
+    .botones {
+      margin: 20px;
+    }
+
+    .botones button {
+      margin: 5px;
+      padding: 10px 20px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="botones">
+    <button id="btnInfo">Mostrar Info</button>
+    <button id="btnSuccess">Mostrar Success</button>
+    <button id="btnError">Mostrar Error</button>
+  </div>
+
+  <div class="notificaciones" id="notificaciones"></div>
+
+  <!-- <script src="ejercicio14.js"></script> -->
+  <script>
+    // ============================================
+    // EJERCICIO 14: Custom Events
+    // ============================================
+
+    // TAREA 1: Crear sistema de notificaciones
+    class SistemaNotificaciones {
+      constructor(contenedor) {
+        this.contenedor = contenedor;
+        this.escucharEventos();
+      }
+
+      escucharEventos() {
+        // TU CÓDIGO AQUÍ
+        // Escuchar evento 'mostrar-notificacion'
+        document.addEventListener('mostrar-notificacion', (e) => {
+          this.mostrar(e.detail);
+        });
+      }
+
+      mostrar({ tipo, mensaje, duracion = 3000 }) {
+        // TU CÓDIGO AQUÍ
+        // Crear div con clase "notificacion" y tipo
+        // Agregar mensaje
+        // Agregar al contenedor
+        // Remover después de "duracion" ms
+        // Disparar evento 'notificacion-cerrada' al remover
+        const div = document.createElement('div');
+        div.classList.add('notificacion', tipo);
+        div.textContent = `${mensaje}`;
+        this.contenedor.append(div);
+        setTimeout(() => {
+          div.remove();
+          const evento = new CustomEvent('notificacion-cerrada', {});
+          document.dispatchEvent(evento);
+        }, duracion);
+      }
+    }
+
+    const sistema = new SistemaNotificaciones(
+      document.getElementById('notificaciones')
+    );
+
+    // TAREA 2: Funciones helper para disparar notificaciones
+    function mostrarInfo(mensaje) {
+      // TU CÓDIGO AQUÍ
+      // Disparar CustomEvent 'mostrar-notificacion'
+      // con detail: { tipo: 'info', mensaje }
+      /**@type {Event} */
+      const evento = new CustomEvent('mostrar-notificacion', {
+        detail: {tipo: 'info', mensaje}
+      });
+      document.dispatchEvent(evento);
+    }
+
+    function mostrarSuccess(mensaje) {
+      // TU CÓDIGO AQUÍ
+      // Similar pero tipo: 'success'
+      /**@type {Event} */
+      const evento = new CustomEvent('mostrar-notificacion', {
+        detail: {tipo: 'success', mensaje}
+      });
+      document.dispatchEvent(evento);
+    }
+
+    function mostrarError(mensaje) {
+      // TU CÓDIGO AQUÍ
+      // Similar pero tipo: 'error'
+      /**@type {Event} */
+      const evento = new CustomEvent('mostrar-notificacion', {
+        detail: {tipo: 'error', mensaje}
+      });
+      document.dispatchEvent(evento);
+    }
+
+    // TAREA 3: Conectar botones
+    document.getElementById('btnInfo').addEventListener('click', () => {
+      mostrarInfo('Esta es una notificación de información');
+    });
+
+    document.getElementById('btnSuccess').addEventListener('click', () => {
+      mostrarSuccess('Operación exitosa!');
+    });
+
+    document.getElementById('btnError').addEventListener('click', () => {
+      mostrarError('Ocurrió un error!');
+    });
+
+    // TAREA 4: Contador de notificaciones
+    let contadorNotificaciones = 0;
+
+    document.addEventListener('mostrar-notificacion', () => {
+      // TU CÓDIGO AQUÍ
+      // Incrementar contador
+      // Mostrar en consola: "Notificaciones mostradas: X"
+      contadorNotificaciones += 1;
+      console.log(`Notificaciones mostradas: ${contadorNotificaciones}`);
+    });
+
+    document.addEventListener('notificacion-cerrada', () => {
+      // TU CÓDIGO AQUÍ
+      // Mostrar en consola: "Notificación cerrada"
+      console.warn("Notificación cerrada");
+    });
+  </script>
+</body>
+
+</html>

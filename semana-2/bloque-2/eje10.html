@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<!-- 
+**CONSIGNA:**
+Experimentar con event propagation y control de flujo
+-->
+
+<head>
+  <meta charset="UTF-8">
+  <title>Event Propagation</title>
+  <style>
+    #abuelo {
+      padding: 50px;
+      background: lightblue;
+    }
+
+    #padre {
+      padding: 30px;
+      background: lightgreen;
+    }
+
+    #hijo {
+      padding: 20px;
+      background: lightyellow;
+    }
+
+    .log {
+      margin-top: 20px;
+      padding: 10px;
+      background: #f0f0f0;
+      font-family: monospace;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="abuelo">
+    ABUELO
+    <div id="padre">
+      PADRE
+      <button id="hijo">HIJO (click aquí)</button>
+    </div>
+  </div>
+
+  <div class="log" id="log"></div>
+
+  <button id="limpiar">Limpiar log</button>
+
+  <!-- <script src="ejercicio10.js"></script> -->
+  <script>
+    // ============================================
+    // EJERCICIO 10: Event Propagation
+    // ============================================
+
+    const abuelo = document.getElementById('abuelo');
+    const padre = document.getElementById('padre');
+    const hijo = document.getElementById('hijo');
+    const log = document.getElementById('log');
+
+    function agregarLog(texto) {
+      const p = document.createElement('p');
+      p.textContent = texto;
+      log.append(p);
+    }
+
+    document.getElementById('limpiar').addEventListener('click', () => {
+      log.innerHTML = '';
+    });
+
+    // TAREA 1: Demostrar bubbling
+    // Agregar listeners a los 3 elementos
+    // Cada uno debe loguear su nombre cuando se hace click
+
+    // TU CÓDIGO AQUÍ
+    abuelo.addEventListener('click', () => {
+      // Loguear "Click en ABUELO (bubbling)"
+      console.log("Click en ABUELO (bubbling)");
+      agregarLog("Click en ABUELO (bubbling)");
+    });
+
+    padre.addEventListener('click', (e) => {
+      // Loguear "Click en PADRE (bubbling)"
+      console.log("Click en PADRE (bubbling)");
+      agregarLog("Click en PADRE (bubbling)");
+      e.stopPropagation();
+    });
+
+    hijo.addEventListener('click', () => {
+      // Loguear "Click en HIJO (bubbling)"
+      console.log("Click en HIJO (bubbling)");
+      agregarLog("Click en HIJO (bubbling)");
+    });
+
+    // Al hacer click en HIJO, debería mostrar:
+    // Click en HIJO (bubbling)
+    // Click en PADRE (bubbling)
+    // Click en ABUELO (bubbling)
+
+    // TAREA 2: Detener propagación en PADRE
+    // Modificar el listener del PADRE para que detenga la propagación
+
+    // TU CÓDIGO AQUÍ
+    // Al hacer click en HIJO ahora debería mostrar solo:
+    // Click en HIJO (bubbling)
+    // Click en PADRE (bubbling)
+    // (NO llega a ABUELO)
+
+    // TAREA 3: Mostrar e.target vs e.currentTarget
+    padre.addEventListener('click', (e) => {
+      // TU CÓDIGO AQUÍ
+      // Loguear:
+      // "target: {e.target.id}"
+      // "currentTarget: {e.currentTarget.id}"
+      console.log(`target: ${e.target.id}`);
+      agregarLog(`target: ${e.target.id}`);
+      console.log(`currentTarget: ${e.currentTarget.id}`);
+      agregarLog(`currentTarget: ${e.currentTarget.id}`);
+    });
+
+    // Al hacer click en HIJO debería mostrar:
+    // target: hijo
+    // currentTarget: padre
+
+    // TAREA 4: Prevenir comportamiento default
+    // Agregar un link y prevenir navegación
+
+    const link = document.createElement('a');
+    link.href = 'https://google.com';
+    link.textContent = 'Link a Google (no navega)';
+    document.body.append(link);
+
+    // TU CÓDIGO AQUÍ
+    link.addEventListener('click', (e) => {
+      // Prevenir navegación
+      // Loguear "Link clickeado pero preventDefault()"
+      e.preventDefault();
+      console.warn(`Link clickeado pero preventDefault()`);
+      agregarLog(`Link clickeado pero preventDefault()`);
+    });
+  </script>
+</body>
+
+</html>

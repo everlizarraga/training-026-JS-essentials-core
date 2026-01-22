@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<!-- 
+**CONSIGNA:**
+Practicar selectores avanzados y método closest()
+-->
+
+<head>
+  <meta charset="UTF-8">
+  <title>Query Selector Avanzado</title>
+  <style>
+    .producto {
+      border: 1px solid #ddd;
+      padding: 10px;
+      margin: 10px;
+    }
+
+    .producto.destacado {
+      border-color: gold;
+      background: #fffacd;
+    }
+
+    .btn {
+      padding: 5px 10px;
+      margin: 5px;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background: blue;
+      color: white;
+    }
+
+    .btn-danger {
+      background: red;
+      color: white;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="catalogo">
+    <div class="producto destacado" data-id="1" data-categoria="electronica">
+      <h3 class="producto-nombre">Laptop</h3>
+      <p class="producto-precio">$1200</p>
+      <button class="btn btn-primary" data-action="comprar">Comprar</button>
+      <button class="btn btn-danger" data-action="eliminar">Eliminar</button>
+    </div>
+
+    <div class="producto" data-id="2" data-categoria="electronica">
+      <h3 class="producto-nombre">Mouse</h3>
+      <p class="producto-precio">$25</p>
+      <button class="btn btn-primary" data-action="comprar">Comprar</button>
+      <button class="btn btn-danger" data-action="eliminar">Eliminar</button>
+    </div>
+
+    <div class="producto" data-id="3" data-categoria="ropa">
+      <h3 class="producto-nombre">Remera</h3>
+      <p class="producto-precio">$50</p>
+      <button class="btn btn-primary" data-action="comprar">Comprar</button>
+      <button class="btn btn-danger" data-action="eliminar">Eliminar</button>
+    </div>
+  </div>
+
+  <!-- <script src="ejercicio7.js"></script> -->
+  <script>
+    // ============================================
+    // EJERCICIO 7: querySelector Avanzado
+    // ============================================
+
+    // TAREA 1: Seleccionar elementos específicos
+    // a) El producto destacado
+    const productoDestacado = /* TU CÓDIGO */
+      document.querySelector('.catalogo .producto.destacado');
+
+    // b) Todos los productos de categoría "electronica"
+    const productosElectronica = /* TU CÓDIGO */
+      document.querySelectorAll('.producto[data-categoria="electronica"]');
+
+    // c) El segundo producto
+    const segundoProducto = /* TU CÓDIGO */
+      document.querySelector('.producto:nth-child(2)');
+
+    // d) Todos los botones "Comprar" (btn-primary)
+    const botonesComprar = /* TU CÓDIGO */
+      document.querySelectorAll('.btn.btn-primary');
+
+    // e) El precio del producto con data-id="2"
+    const precioProducto2 = /* TU CÓDIGO */
+      document.querySelector('.producto[data-id="2"] .producto-precio');
+
+    console.log('Producto destacado:', productoDestacado);
+    console.log('Productos electrónica:', productosElectronica);
+    console.log('Segundo producto:', segundoProducto);
+    console.log('Botones comprar:', botonesComprar);
+    console.log('Precio producto 2:', precioProducto2);
+
+    // TAREA 2: Usar closest() en event listener
+    document.querySelector('.catalogo').addEventListener('click', (e) => {
+      // TU CÓDIGO AQUÍ
+      // Si se clickeó un botón:
+      //   - Encontrar el producto contenedor usando closest()
+      //   - Obtener el data-id del producto
+      //   - Obtener el data-action del botón
+      //   - Mostrar en consola: "Acción: comprar, Producto ID: 1"
+      const btn = e.target.closest('.btn.btn-primary');
+      if(btn) {
+        const card = btn.closest('.producto');
+        const id = card.dataset.id;
+        const action = btn.dataset.action;
+        console.log(`Accion: ${action}, Producto ID: ${id}`);
+      }
+    });
+
+    // TAREA 3: Selectores combinados
+    // a) Nombre del producto destacado
+    const nombreDestacado = /* TU CÓDIGO */
+      productoDestacado.querySelector('.producto-nombre');
+
+    // b) Botones de eliminar (btn-danger) solo en productos de electrónica
+    const botonesEliminarElectronica = /* TU CÓDIGO */
+      [...productosElectronica].map(e => e.querySelector('.btn.btn-danger'));
+
+    // c) Productos que NO son destacados
+    const productosNoDestacados = /* TU CÓDIGO */
+      document.querySelectorAll('.producto:not(.destacado)');
+
+    console.log('Nombre destacado:', nombreDestacado);
+    console.log('Botones eliminar electrónica:', botonesEliminarElectronica);
+    console.log('Productos no destacados:', productosNoDestacados);
+  </script>
+</body>
+
+</html>

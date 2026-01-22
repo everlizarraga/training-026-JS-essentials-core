@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>dataset Demo</title>
+  <style>
+    .producto {
+      border: 1px solid #ddd;
+      padding: 10px;
+      margin: 10px;
+      display: inline-block;
+    }
+
+    .producto.oculto {
+      display: none;
+    }
+
+    .filtros {
+      margin: 20px 0;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="filtros">
+    <button data-filtro="categoria" data-valor="electronica">Electrónica</button>
+    <button data-filtro="categoria" data-valor="ropa">Ropa</button>
+    <button data-filtro="precio" data-valor="50">Hasta $50</button>
+    <button data-filtro="precio" data-valor="100">Hasta $100</button>
+    <button data-filtro="reset">Mostrar todos</button>
+  </div>
+
+  <div class="productos">
+    <div class="producto" data-id="1" data-categoria="electronica" data-precio="1200" data-stock="5">
+      <h3>Laptop</h3>
+      <p class="precio">$1200</p>
+    </div>
+
+    <div class="producto" data-id="2" data-categoria="electronica" data-precio="25" data-stock="15">
+      <h3>Mouse</h3>
+      <p class="precio">$25</p>
+    </div>
+
+    <div class="producto" data-id="3" data-categoria="ropa" data-precio="50" data-stock="10">
+      <h3>Remera</h3>
+      <p class="precio">$50</p>
+    </div>
+
+    <div class="producto" data-id="4" data-categoria="ropa" data-precio="80" data-stock="8">
+      <h3>Pantalón</h3>
+      <p class="precio">$80</p>
+    </div>
+  </div>
+
+  <!-- <script src="ejercicio12.js"></script> -->
+  <script>
+    // ============================================
+    // EJERCICIO 12: dataset + data attributes
+    // ============================================
+
+    const productos = document.querySelectorAll('.producto');
+    const filtros = document.querySelector('.filtros');
+
+    // TAREA 1: Implementar sistema de filtros
+    filtros.addEventListener('click', (e) => {
+      const boton = e.target.closest('[data-filtro]');
+      if (!boton) return;
+
+      const filtro = boton.dataset.filtro;
+      const valor = boton.dataset.valor;
+
+      // TU CÓDIGO AQUÍ
+      // Si filtro === 'reset' → mostrar todos
+      // Si filtro === 'categoria' → filtrar por categoría
+      // Si filtro === 'precio' → filtrar por precio máximo
+      productos.forEach(prod => {
+        if (filtro === 'reset') {
+          prod.classList.remove('oculto');
+        } else if (filtro === 'categoria') {
+          prod.classList.toggle('oculto', prod.dataset.categoria !== valor);
+        } else if (filtro === 'precio') {
+          const precio = parseFloat(prod.dataset.precio);
+          const max = parseFloat(valor);
+          prod.classList.toggle('oculto', precio > max);
+        }
+      });
+      actualizarContador();
+      guardarFiltro(filtro);
+      actualizarTotal();
+    });
+
+    // TAREA 2: Agregar contador de productos visibles
+    const contador = document.createElement('div');
+    contador.id = 'contador';
+    document.body.prepend(contador);
+
+    function actualizarContador() {
+      // TU CÓDIGO AQUÍ
+      // Contar productos que NO tienen clase "oculto"
+      // Mostrar: "Mostrando X productos"
+      const visibles = document.querySelectorAll('.producto:not(.oculto)');
+      contador.textContent = `Mostrando ${visibles.length} productos`;
+    }
+
+    // Llamar después de cada filtro
+    actualizarContador();
+
+    // TAREA 3: Guardar filtro activo en data attribute
+    // Cuando se aplica un filtro, guardar en body.dataset.filtroActivo
+    function guardarFiltro(filtro) {
+      document.body.dataset.filtroActivo = filtro;
+    }
+    guardarFiltro('reset');
+
+    // TAREA 4: Agregar precio total de productos visibles
+    const total = document.createElement('div');
+    total.id = 'total';
+    document.body.prepend(total);
+
+    function actualizarTotal() {
+      // TU CÓDIGO AQUÍ
+      // Sumar precios de productos visibles
+      // Mostrar: "Total: $X"
+      const visibles = document.querySelectorAll('.producto:not(.oculto)');
+      const totalPrecio = Array.from(visibles).reduce((sum, prod) => {
+        return sum + parseFloat(prod.dataset.precio);
+      }, 0);
+
+      total.textContent = `Total: $${totalPrecio}`;
+    }
+
+    actualizarTotal();
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>IntersectionObserver Demo</title>
+  <style>
+    body {
+      padding: 20px;
+    }
+
+    .spacer {
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+    }
+
+    .imagen-container {
+      margin: 50px 0;
+      text-align: center;
+    }
+
+    .lazy {
+      width: 400px;
+      height: 300px;
+      background: #f0f0f0;
+      border: 2px dashed #ccc;
+    }
+
+    .lazy.loaded {
+      border-color: green;
+    }
+
+    .fade-in {
+      opacity: 0;
+      transform: translateY(50px);
+      transition: opacity 0.6s, transform 0.6s;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+
+<body>
+  <h1>IntersectionObserver Demo</h1>
+
+  <div class="spacer">Scrolleá hacia abajo ⬇</div>
+
+  <div class="imagen-container fade-in">
+    <h2>Imagen 1</h2>
+    <img class="lazy" data-src="https://picsum.photos/400/300?random=1" alt="Imagen 1">
+  </div>
+
+  <div class="imagen-container fade-in">
+    <h2>Imagen 2</h2>
+    <img class="lazy" data-src="https://picsum.photos/400/300?random=2" alt="Imagen 2">
+  </div>
+
+  <div class="imagen-container fade-in">
+    <h2>Imagen 3</h2>
+    <img class="lazy" data-src="https://picsum.photos/400/300?random=3" alt="Imagen 3">
+  </div>
+
+  <div class="spacer">Fin del contenido ✓</div>
+
+  <!-- <script src="ejercicio13.js"></script> -->
+  <script>
+    // ============================================
+    // EJERCICIO 13: IntersectionObserver
+    // ============================================
+
+    // TAREA 1: Lazy loading de imágenes
+    const lazyImages = document.querySelectorAll('.lazy');
+
+    const imageObserver = new IntersectionObserver((entries, observer) => {
+      // TU CÓDIGO AQUÍ
+      // Por cada entry:
+      //   Si isIntersecting:
+      //     - Cargar imagen real (dataset.src → src)
+      //     - Agregar clase "loaded"
+      //     - Dejar de observar (unobserve)
+      entries.forEach(entry => {
+        if(entry.isIntersecting) {
+          const img = entry.target;
+          // target.setAttribute("src", target.dataset.src);
+          img.src = img.dataset.src;
+          img.classList.add('loaded');
+
+          imagenesCargadas += 1;
+          actualizarContador();
+
+          observer.unobserve(img);
+        }
+      });
+    }, {
+      rootMargin: '50px',  // Cargar 50px antes
+      threshold: 0.1       // 10% visible
+    });
+
+    // Observar todas las imágenes
+    lazyImages.forEach(img => imageObserver.observe(img));
+
+    // TAREA 2: Animaciones fade-in al scrollear
+    const fadeElements = document.querySelectorAll('.fade-in');
+
+    const fadeObserver = new IntersectionObserver((entries) => {
+      // TU CÓDIGO AQUÍ
+      // Por cada entry:
+      //   Si isIntersecting:
+      //     - Agregar clase "visible"
+      entries.forEach(entry => {
+        if(entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        } else {
+          entry.target.classList.remove('visible');
+        }
+      });
+    }, {
+      threshold: 0.2  // 20% visible
+    });
+
+    // Observar todos los elementos fade-in
+    fadeElements.forEach(el => fadeObserver.observe(el));
+
+    // TAREA 3: Contador de imágenes cargadas
+    let imagenesCargadas = 0;
+
+    const contador = document.createElement('div');
+    contador.style.position = 'fixed';
+    contador.style.top = '20px';
+    contador.style.right = '20px';
+    contador.style.padding = '10px';
+    contador.style.background = 'black';
+    contador.style.color = 'white';
+    document.body.append(contador);
+
+    function actualizarContador() {
+      // TU CÓDIGO AQUÍ
+      // Mostrar: "Imágenes cargadas: X/Y"
+      contador.textContent = `Imagenes cargadas: ${imagenesCargadas}/${lazyImages.length}`;
+    }
+
+    actualizarContador();
+
+    // Modificar TAREA 1 para incrementar contador al cargar
+  </script>
+</body>
+
+</html>

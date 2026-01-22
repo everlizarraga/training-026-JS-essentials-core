@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>classList API</title>
+  <style>
+    .tabs {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .tab {
+      padding: 10px 20px;
+      cursor: pointer;
+      background: #f0f0f0;
+      border: 2px solid #ddd;
+    }
+
+    .tab.active {
+      background: white;
+      border-bottom-color: white;
+      font-weight: bold;
+    }
+
+    .panel {
+      display: none;
+      padding: 20px;
+      border: 2px solid #ddd;
+    }
+
+    .panel.active {
+      display: block;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="tabs">
+    <div class="tab active" data-panel="panel1">Tab 1</div>
+    <div class="tab" data-panel="panel2">Tab 2</div>
+    <div class="tab" data-panel="panel3">Tab 3</div>
+  </div>
+
+  <div class="panel active" id="panel1">Contenido del Panel 1</div>
+  <div class="panel" id="panel2">Contenido del Panel 2</div>
+  <div class="panel" id="panel3">Contenido del Panel 3</div>
+
+  <!-- <script src="ejercicio11.js"></script> -->
+  <script>
+    // ============================================
+    // EJERCICIO 11: classList API
+    // ============================================
+
+    const tabs = document.querySelectorAll('.tab');
+    const panels = document.querySelectorAll('.panel');
+
+    // TAREA 1: Implementar sistema de tabs
+    // Al hacer click en un tab:
+    // - Remover "active" de todos los tabs
+    // - Agregar "active" al tab clickeado
+    // - Remover "active" de todos los panels
+    // - Agregar "active" al panel correspondiente
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', (e) => {
+        // TU CÓDIGO AQUÍ
+        document.body.classList.add('transitioning');
+
+        [...tabs].forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        [...panels].forEach(p => p.classList.remove('active'));
+        const panel = [...panels].find(p => p.id == tab.dataset.panel);
+        panel.classList.add('active');
+
+        setTimeout(() => {
+          document.body.classList.remove('transitioning');
+        }, 300);
+      });
+    });
+
+    // TAREA 2: Agregar dark mode toggle
+    const btnDarkMode = document.createElement('button');
+    btnDarkMode.textContent = 'Toggle Dark Mode';
+    document.body.prepend(btnDarkMode);
+
+    btnDarkMode.addEventListener('click', () => {
+      // TU CÓDIGO AQUÍ
+      // Toggle clase "dark-mode" en body
+      // Cambiar texto del botón según estado
+      document.body.classList.toggle('dark-mode');
+      const isDark = document.body.classList.contains('dark-mode');
+      btnDarkMode.textContent = isDark ? 'Light Mode' : 'Dark Mode';
+    });
+
+    // CSS para dark mode (agregar al head)
+    const style = document.createElement('style');
+    style.textContent = `
+      body.dark-mode {
+        background: #222;
+        color: white;
+      }
+      body.dark-mode .tab {
+        background: #444;
+        border-color: #666;
+        color: white;
+      }
+      body.dark-mode .panel {
+        background: #333;
+        border-color: #666;
+      }
+    `;
+    document.head.append(style);
+
+    // TAREA 3: Animación de transición
+    // Agregar clase "transitioning" al cambiar tabs
+    // Removerla después de 300ms
+
+    // Modificar el código de TAREA 1 para incluir esto
+  </script>
+</body>
+
+</html>

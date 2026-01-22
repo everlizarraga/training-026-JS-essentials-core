@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<!-- 
+**CONSIGNA:**
+Implementar event delegation para listas dinámicas
+-->
+
+<head>
+  <meta charset="UTF-8">
+  <title>Event Delegation</title>
+  <style>
+    .todo-item {
+      padding: 10px;
+      margin: 5px 0;
+      border: 1px solid #ddd;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .todo-item.completado {
+      text-decoration: line-through;
+      opacity: 0.6;
+    }
+
+    .btn-eliminar {
+      background: red;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <input type="text" id="inputTodo" placeholder="Nueva tarea">
+    <button id="btnAgregar">Agregar</button>
+
+    <ul id="listaTodos"></ul>
+  </div>
+
+  <!-- <script src="ejercicio9.js"></script> -->
+  <script>
+    // ============================================
+    // EJERCICIO 9: Event Delegation
+    // ============================================
+
+    const listaTodos = document.getElementById('listaTodos');
+    const inputTodo = document.getElementById('inputTodo');
+    const btnAgregar = document.getElementById('btnAgregar');
+
+    // TAREA 1: Función para agregar TODO
+    function agregarTodo(texto) {
+      // TU CÓDIGO AQUÍ
+      // Crear estructura:
+      // <li class="todo-item" data-id="...">
+      //   <span class="todo-text">{texto}</span>
+      //   <button class="btn-eliminar">X</button>
+      // </li>
+      const li = document.createElement('div');
+      li.classList.add('todo-item');
+      li.dataset.id = texto.split(' ').join('-');
+
+      const text = document.createElement('span');
+      text.classList.add('todo-text');
+      text.textContent = `${texto}`;
+
+      const btn = document.createElement('button');
+      btn.classList.add('btn-eliminar');
+      btn.textContent = "X";
+
+      li.append(text, btn);
+
+      // Agregar a la lista
+      listaTodos.append(li);
+    }
+
+    // Agregar algunos TODOs iniciales
+    agregarTodo('Aprender JavaScript');
+    agregarTodo('Practicar DOM');
+    agregarTodo('Hacer proyecto');
+
+    // TAREA 2: Event listener para agregar TODO
+    btnAgregar.addEventListener('click', () => {
+      // TU CÓDIGO AQUÍ
+      // Obtener valor del input
+      // Si no está vacío → agregar TODO
+      // Limpiar input
+
+      const texto = inputTodo.value.trim();
+      if(texto !== '') {
+        agregarTodo(texto);
+        inputTodo.value = '';
+      }
+    });
+
+    // TAREA 3: Event delegation para la lista
+    // UN SOLO listener que maneje:
+    // - Click en el texto → marcar como completado (toggle clase)
+    // - Click en botón eliminar → eliminar TODO
+
+    listaTodos.addEventListener('click', (e) => {
+      // TU CÓDIGO AQUÍ
+
+      // Si se clickeó el botón eliminar:
+      //   - Encontrar el <li> con closest()
+      //   - Eliminarlo
+
+      // Si se clickeó el texto del TODO:
+      //   - Encontrar el <li> con closest()
+      //   - Toggle clase "completado"
+
+      const btn = e.target.closest('.btn-eliminar');
+      if(btn) {
+        const card = btn.closest('.todo-item');
+        card.remove();
+        return;
+      }
+      
+      const text = e.target.closest('.todo-text');
+      if(text) {
+        const card = text.closest('.todo-item');
+        card.classList.toggle('completado');
+        console.log("Completado:", card);
+        return;
+      }
+      console.warn("Click no registrado");
+    });
+
+    // TAREA 4: Agregar funcionalidad con Enter
+    inputTodo.addEventListener('keypress', (e) => {
+      // TU CÓDIGO AQUÍ
+      // Si presiona Enter → agregar TODO
+      if(e.key === 'Enter') {
+        btnAgregar.click();
+      }
+    });
+  </script>
+</body>
+
+</html>

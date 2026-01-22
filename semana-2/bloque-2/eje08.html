@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<!-- 
+**CONSIGNA:**
+Crear elementos dinámicamente sin usar innerHTML
+-->
+
+<head>
+  <meta charset="UTF-8">
+  <title>createElement Demo</title>
+  <style>
+    .card {
+      border: 1px solid #ddd;
+      padding: 15px;
+      margin: 10px;
+      border-radius: 8px;
+    }
+
+    .precio {
+      color: green;
+      font-weight: bold;
+    }
+
+    .stock {
+      color: #666;
+    }
+
+    .btn {
+      padding: 8px 15px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="productos"></div>
+
+  <!-- <script src="ejercicio8.js"></script> -->
+  <script>
+    // ============================================
+    // EJERCICIO 8: createElement + append
+    // ============================================
+
+    const productosData = [
+      { id: 1, nombre: 'Laptop', precio: 1200, stock: 5 },
+      { id: 2, nombre: 'Mouse', precio: 25, stock: 15 },
+      { id: 3, nombre: 'Teclado', precio: 75, stock: 10 }
+    ];
+
+    // TAREA 1: Crear función que genera card de producto
+    function crearProductCard(producto) {
+      // TU CÓDIGO AQUÍ
+      // Estructura:
+      // <div class="card" data-id="...">
+      //   <h3>{nombre}</h3>
+      //   <p class="precio">${precio}</p>
+      //   <p class="stock">Stock: {stock}</p>
+      //   <button class="btn">Comprar</button>
+      // </div>
+
+      // IMPORTANTE: NO usar innerHTML
+      // Usar createElement, classList, textContent, dataset, append
+      const card = document.createElement('div');
+      const titulo = document.createElement('h3');
+      const precio = document.createElement('p');
+      const stock = document.createElement('p');
+      const btn = document.createElement('button');
+      card.append(titulo, precio, stock, btn);
+      card.classList.add('card');
+      card.dataset.id = producto.id;
+      titulo.textContent = producto.nombre;
+      precio.classList.add('precio');
+      precio.textContent = `$${producto.precio}`;
+      stock.classList.add('stock');
+      stock.textContent = `Stock: ${producto.stock}`;
+      btn.classList.add('btn');
+      btn.textContent = 'Comprar';
+      return card;
+    }
+
+    // TAREA 2: Renderizar todos los productos (performance)
+    function renderizarProductos(productos) {
+      const container = document.getElementById('productos');
+
+      // TU CÓDIGO AQUÍ
+      // Crear todas las cards
+      // Agregarlas de forma eficiente (un solo append con spread)
+      container.append(...productos.map(p => crearProductCard(p)));
+    }
+
+    renderizarProductos(productosData);
+
+    // TAREA 3: Agregar producto nuevo al principio
+    function agregarProductoAlPrincipio(producto) {
+      const container = document.getElementById('productos');
+
+      // TU CÓDIGO AQUÍ
+      // Crear card del producto
+      // Agregarlo al PRINCIPIO del container
+      container.prepend(crearProductCard(producto));
+    }
+
+    // Probar después de 2 segundos
+    setTimeout(() => {
+      agregarProductoAlPrincipio({
+        id: 4,
+        nombre: 'Monitor',
+        precio: 300,
+        stock: 3
+      });
+    }, 2000);
+
+    // TAREA 4: Event listener que elimina producto
+    // Cuando se hace click en "Comprar" → remover la card
+    document.getElementById('productos').addEventListener('click', (e) => {
+      // TU CÓDIGO AQUÍ
+      // Si se clickeó el botón "Comprar"
+      //   - Encontrar la card con closest()
+      //   - Remover la card con remove()
+      const btn = e.target.closest('.btn');
+      if(btn) {
+        const card = btn.closest('.card');
+        card.remove();
+      }
+    });
+  </script>
+</body>
+
+</html>
