@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Task Manager</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+  <div class="container">
+    <!-- Header -->
+    <header class="app-header">
+      <h1>📝 Task Manager</h1>
+    </header>
+
+    <!-- Stats Panel -->
+    <div id="stats-panel" class="stats-panel">
+      <!-- Se renderiza dinámicamente -->
+    </div>
+
+    <!-- Filters & Search -->
+    <div class="controls">
+      <div class="filters">
+        <button class="filter-btn active" data-filter="all">Todas</button>
+        <button class="filter-btn" data-filter="active">Activas</button>
+        <button class="filter-btn" data-filter="completed">Completadas</button>
+      </div>
+
+      <div class="search-box">
+        <input type="text" id="search-input" placeholder="🔍 Buscar tareas...">
+      </div>
+
+      <div class="sort-box">
+        <label for="sort-select">Ordenar:</label>
+        <select id="sort-select">
+          <option value="date">Fecha</option>
+          <option value="priority">Prioridad</option>
+          <option value="alphabetical">Alfabético</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Task Form -->
+    <div id="task-form" class="task-form">
+      <!-- Se renderiza dinámicamente -->
+    </div>
+
+    <!-- Task List -->
+    <div id="task-list" class="task-list">
+      <!-- Se renderiza dinámicamente -->
+    </div>
+  </div>
+
+  <!-- Scripts (type="module" para ES6 modules) -->
+  <script type="module" src="js/app.js"></script>
+</body>
+
+</html>
