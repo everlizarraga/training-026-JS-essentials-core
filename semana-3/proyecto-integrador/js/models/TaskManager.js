@@ -8,6 +8,7 @@ import { Task } from './Task.js';
 export class TaskManager {
   constructor() {
     // Array de tareas
+    /**@type {Task[]} */
     this.tasks = [];
 
     // Observers (Observer Pattern)
@@ -96,7 +97,11 @@ export class TaskManager {
   // FILTROS Y BÚSQUEDA
   // ==========================================
 
-  // Filtrar por estado
+  /**
+   * Filtrar por estado
+   * @param {'all'|'active'|'completed'} status 
+   * @returns {Task[]}
+   */
   getByStatus(status) {
     if (status === 'all') return this.getAll();
     if (status === 'active') return this.tasks.filter(t => !t.completed);
@@ -104,7 +109,11 @@ export class TaskManager {
     return this.getAll();
   }
 
-  // Filtrar por categoría
+  /**
+   * Filtrar por categoría
+   * @param {string} category 
+   * @returns {Task[]}
+   */
   getByCategory(category) {
     if (!category || category === 'all') return this.getAll();
     return this.tasks.filter(t => t.category === category);

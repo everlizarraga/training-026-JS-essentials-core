@@ -2,20 +2,35 @@
 // TASK MODEL
 // Representa una tarea individual
 // ============================================
+/**@typedef {'high'|'medium'|'low'} Priority */
 
 export class Task {
+  /**
+   * Constructor
+   * @param {{
+   * id: string
+   * title: string
+   * description: string
+   * completed: boolean
+   * priority: Priority
+   * category: string
+   * createdAt: string
+   * completedAt: string
+   * }} data 
+   */
   constructor(data) {
     // ID único (timestamp + random para evitar colisiones)
     this.id = data.id || Date.now() + Math.random().toString(36).substr(2, 9);
 
     // Propiedades de la tarea
     this.title = data.title;
-    this.description = data.description || '';
-    this.completed = data.completed || false;
-    this.priority = data.priority || 'medium'; // 'high', 'medium', 'low'
-    this.category = data.category || 'General';
-    this.createdAt = data.createdAt || new Date().toISOString();
-    this.completedAt = data.completedAt || null;
+    this.description = data.description ?? '';
+    this.completed = data.completed ?? false;
+    /**@type {Priority} */
+    this.priority = data.priority ?? 'medium'; // 'high', 'medium', 'low'
+    this.category = data.category ?? 'General';
+    this.createdAt = data.createdAt ?? new Date().toISOString();
+    this.completedAt = data.completedAt ?? null;
   }
 
   // Marcar como completada
