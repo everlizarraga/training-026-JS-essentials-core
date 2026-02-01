@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Notes App - MVC</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      overflow: hidden;
+    }
+
+    .header {
+      background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      color: white;
+      padding: 30px;
+      text-align: center;
+    }
+
+    .header h1 {
+      font-size: 2rem;
+    }
+
+    /* Form */
+    .note-form {
+      padding: 20px;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: 600;
+      color: #333;
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width: 100%;
+      padding: 10px;
+      border: 2px solid #ddd;
+      border-radius: 6px;
+      font-family: inherit;
+      font-size: 1rem;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
+      outline: none;
+      border-color: #f5576c;
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    .btn-add {
+      width: 100%;
+      padding: 12px;
+      background: #f5576c;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 1rem;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .btn-add:hover {
+      background: #e04656;
+    }
+
+    /* Search */
+    .search-box {
+      padding: 15px 20px;
+      background: #f8f9fa;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 10px;
+      border: 2px solid #ddd;
+      border-radius: 6px;
+      font-size: 1rem;
+    }
+
+    /* Notes List */
+    .notes-list {
+      padding: 20px;
+      min-height: 300px;
+    }
+
+    .note-card {
+      background: #fff;
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      padding: 15px;
+      margin-bottom: 15px;
+      transition: all 0.3s ease;
+    }
+
+    .note-card:hover {
+      border-color: #f5576c;
+      box-shadow: 0 4px 8px rgba(245, 87, 108, 0.2);
+    }
+
+    .note-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .note-title {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #333;
+    }
+
+    .note-category {
+      padding: 4px 8px;
+      background: #f093fb;
+      color: white;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    .note-content {
+      color: #666;
+      margin-bottom: 10px;
+      line-height: 1.5;
+    }
+
+    .note-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .note-date {
+      font-size: 0.875rem;
+      color: #999;
+    }
+
+    .btn-delete {
+      padding: 6px 12px;
+      background: #dc3545;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.875rem;
+    }
+
+    .btn-delete:hover {
+      background: #c82333;
+    }
+
+    /* Empty State */
+    .empty-state {
+      text-align: center;
+      padding: 60px 20px;
+      color: #999;
+    }
+
+    .empty-state h3 {
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+    }
+
+    .disabled {
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <!-- Header -->
+    <div class="header">
+      <h1>📝 Notes App (MVC)</h1>
+    </div>
+
+    <!-- Form -->
+    <div class="note-form">
+      <form id="note-form">
+        <div class="form-group">
+          <label for="note-title">Título</label>
+          <input type="text" id="note-title" placeholder="Título de la nota..." required>
+        </div>
+
+        <div class="form-group">
+          <label for="note-content">Contenido</label>
+          <textarea id="note-content" placeholder="Escribe tu nota aquí..." required></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="note-category">Categoría</label>
+          <select id="note-category">
+            <option value="Personal">Personal</option>
+            <option value="Work">Trabajo</option>
+            <option value="Ideas">Ideas</option>
+            <option value="Study">Estudio</option>
+          </select>
+        </div>
+
+        <button type="submit" class="btn-add">➕ Agregar Nota</button>
+      </form>
+    </div>
+
+    <!-- Search -->
+    <div class="search-box">
+      <input type="text" id="search-input" class="search-input" placeholder="🔍 Buscar notas...">
+    </div>
+
+    <!-- Notes List (se renderiza dinámicamente) -->
+    <div id="notes-list" class="notes-list">
+      <!-- EJEMPLO de estructura (no funcional) -->
+
+      <!-- Note 1 -->
+      <div class="note-card disabled">
+        <div class="note-header">
+          <div class="note-title">Mi primera nota</div>
+          <span class="note-category">Personal</span>
+        </div>
+        <div class="note-content">
+          Este es el contenido de mi primera nota. Puede ser largo y tener múltiples líneas.
+        </div>
+        <div class="note-footer">
+          <span class="note-date">28/01/2026</span>
+          <button class="btn-delete">🗑️ Eliminar</button>
+        </div>
+      </div>
+
+      <!-- Note 2 -->
+      <div class="note-card disabled">
+        <div class="note-header">
+          <div class="note-title">Idea genial</div>
+          <span class="note-category">Ideas</span>
+        </div>
+        <div class="note-content">
+          Desarrollar una app de notas con MVC perfecto.
+        </div>
+        <div class="note-footer">
+          <span class="note-date">28/01/2026</span>
+          <button class="btn-delete">🗑️ Eliminar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="app.js"></script>
+</body>
+
+</html>
