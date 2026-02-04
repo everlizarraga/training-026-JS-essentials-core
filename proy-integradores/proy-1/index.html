@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Expense Tracker</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #0f1923;
+      color: #e2e8f0;
+      min-height: 100vh;
+      padding: 24px;
+    }
+
+    .container {
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    /* Header */
+    .header {
+      text-align: center;
+      margin-bottom: 28px;
+    }
+
+    .header h1 {
+      font-size: 1.8rem;
+      color: #fff;
+      margin-bottom: 4px;
+    }
+
+    .header p {
+      color: #64748b;
+      font-size: 0.9rem;
+    }
+
+    /* Cards */
+    .card {
+      background: #1a2736;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 16px;
+      border: 1px solid #243447;
+    }
+
+    .card-title {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #64748b;
+      margin-bottom: 12px;
+      font-weight: 600;
+    }
+
+    /* Form */
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .form-grid .full-width {
+      grid-column: 1 / -1;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.8rem;
+      color: #64748b;
+      margin-bottom: 6px;
+    }
+
+    .form-group input,
+    .form-group select {
+      width: 100%;
+      padding: 10px 12px;
+      background: #0f1923;
+      border: 1px solid #243447;
+      border-radius: 8px;
+      color: #e2e8f0;
+      font-size: 0.9rem;
+      font-family: inherit;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus {
+      outline: none;
+      border-color: #38bdf8;
+    }
+
+    .form-group input[type="date"]::-webkit-calendar-picker-indicator {
+      filter: invert(1);
+      cursor: pointer;
+    }
+
+    .btn-add {
+      width: 100%;
+      padding: 12px;
+      background: linear-gradient(135deg, #38bdf8, #0ea5e9);
+      border: none;
+      border-radius: 8px;
+      color: #fff;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 4px;
+      transition: opacity 0.2s;
+    }
+
+    .btn-add:hover {
+      opacity: 0.85;
+    }
+
+    /* Stats */
+    .stats-total {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #f8fafc;
+      margin-bottom: 16px;
+    }
+
+    .stats-total span {
+      font-size: 1rem;
+      color: #64748b;
+      font-weight: 400;
+    }
+
+    .stat-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .stat-label {
+      width: 100px;
+      font-size: 0.85rem;
+      color: #94a3b8;
+      flex-shrink: 0;
+    }
+
+    .stat-bar-wrap {
+      flex: 1;
+      background: #0f1923;
+      border-radius: 6px;
+      height: 8px;
+      overflow: hidden;
+    }
+
+    .stat-bar {
+      height: 100%;
+      border-radius: 6px;
+      transition: width 0.4s ease;
+    }
+
+    .stat-bar.food {
+      background: #38bdf8;
+    }
+
+    .stat-bar.transport {
+      background: #a78bfa;
+    }
+
+    .stat-bar.entertainment {
+      background: #fb923c;
+    }
+
+    .stat-bar.shopping {
+      background: #34d399;
+    }
+
+    .stat-bar.other {
+      background: #64748b;
+    }
+
+    .stat-amount {
+      width: 80px;
+      text-align: right;
+      font-size: 0.85rem;
+      color: #f8fafc;
+      font-weight: 600;
+      flex-shrink: 0;
+    }
+
+    .stat-percent {
+      width: 38px;
+      text-align: right;
+      font-size: 0.75rem;
+      color: #64748b;
+      flex-shrink: 0;
+    }
+
+    /* Filter */
+    .filter-bar {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .filter-btn {
+      padding: 6px 14px;
+      background: #0f1923;
+      border: 1px solid #243447;
+      border-radius: 20px;
+      color: #94a3b8;
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: inherit;
+    }
+
+    .filter-btn:hover {
+      border-color: #38bdf8;
+      color: #38bdf8;
+    }
+
+    .filter-btn.active {
+      background: #38bdf8;
+      border-color: #38bdf8;
+      color: #fff;
+    }
+
+    /* Expense List */
+    .expense-list {
+      min-height: 120px;
+    }
+
+    .expense-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 0;
+      border-bottom: 1px solid #243447;
+    }
+
+    .expense-item:last-child {
+      border-bottom: none;
+    }
+
+    .expense-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .expense-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+
+    .expense-icon.food {
+      background: #1e3a5f;
+    }
+
+    .expense-icon.transport {
+      background: #2d1f4e;
+    }
+
+    .expense-icon.entertainment {
+      background: #3d2214;
+    }
+
+    .expense-icon.shopping {
+      background: #1a3d2e;
+    }
+
+    .expense-icon.other {
+      background: #1f2937;
+    }
+
+    .expense-desc {
+      font-size: 0.9rem;
+      color: #f1f5f9;
+      font-weight: 500;
+    }
+
+    .expense-date {
+      font-size: 0.75rem;
+      color: #64748b;
+      margin-top: 2px;
+    }
+
+    .expense-right {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .expense-amount {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #f43f5e;
+    }
+
+    .btn-delete {
+      background: none;
+      border: none;
+      color: #475569;
+      cursor: pointer;
+      font-size: 1rem;
+      padding: 4px;
+      border-radius: 4px;
+      transition: color 0.2s;
+    }
+
+    .btn-delete:hover {
+      color: #f43f5e;
+    }
+
+    /* Empty State */
+    .empty-state {
+      text-align: center;
+      padding: 40px 20px;
+      color: #475569;
+    }
+
+    .empty-state .empty-icon {
+      font-size: 2.5rem;
+      margin-bottom: 12px;
+    }
+
+    .empty-state p {
+      font-size: 0.85rem;
+      color: #64748b;
+    }
+
+    .disabled {
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+
+    <!-- Header -->
+    <div class="header">
+      <h1>💰 Expense Tracker</h1>
+      <p>Controlá tus gastos diarios</p>
+    </div>
+
+    <!-- Form -->
+    <div class="card">
+      <div class="card-title">Nuevo Gasto</div>
+      <form id="expense-form">
+        <div class="form-grid">
+          <div class="form-group full-width">
+            <label>Descripción</label>
+            <input type="text" id="expense-desc" placeholder="Ej: Supermercado" required>
+          </div>
+          <div class="form-group">
+            <label>Monto ($)</label>
+            <input type="number" id="expense-amount" placeholder="0.00" min="0" step="0.01" required>
+          </div>
+          <div class="form-group">
+            <label>Categoría</label>
+            <select id="expense-category">
+              <option value="Food">🍔 Food</option>
+              <option value="Transport">🚗 Transport</option>
+              <option value="Entertainment">🎬 Entertainment</option>
+              <option value="Shopping">🛍️ Shopping</option>
+              <option value="Other">📦 Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Fecha</label>
+            <input type="date" id="expense-date" required>
+          </div>
+        </div>
+        <button type="submit" class="btn-add">➕ Agregar Gasto</button>
+      </form>
+    </div>
+
+    <!-- Stats -->
+    <div class="card">
+      <div class="card-title">Estadísticas</div>
+      <div id="stats-container">
+        <!-- Se renderiza dinámicamente -->
+
+        <!-- EJEMPLO SIMULADO (estructura de referencia) -->
+        <div class="stats-total">$1,250.00 <span>gastado</span></div>
+
+        <div class="stat-row">
+          <div class="stat-label">Food</div>
+          <div class="stat-bar-wrap">
+            <div class="stat-bar food" style="width: 45%"></div>
+          </div>
+          <div class="stat-percent">45%</div>
+          <div class="stat-amount">$562.50</div>
+        </div>
+
+        <div class="stat-row">
+          <div class="stat-label">Transport</div>
+          <div class="stat-bar-wrap">
+            <div class="stat-bar transport" style="width: 20%"></div>
+          </div>
+          <div class="stat-percent">20%</div>
+          <div class="stat-amount">$250.00</div>
+        </div>
+
+        <div class="stat-row">
+          <div class="stat-label">Entertainment</div>
+          <div class="stat-bar-wrap">
+            <div class="stat-bar entertainment" style="width: 15%"></div>
+          </div>
+          <div class="stat-percent">15%</div>
+          <div class="stat-amount">$187.50</div>
+        </div>
+
+        <div class="stat-row">
+          <div class="stat-label">Shopping</div>
+          <div class="stat-bar-wrap">
+            <div class="stat-bar shopping" style="width: 20%"></div>
+          </div>
+          <div class="stat-percent">20%</div>
+          <div class="stat-amount">$250.00</div>
+        </div>
+
+        <div class="stat-row">
+          <div class="stat-label">Other</div>
+          <div class="stat-bar-wrap">
+            <div class="stat-bar other" style="width: 20%"></div>
+          </div>
+          <div class="stat-percent">5%</div>
+          <div class="stat-amount">$50.00</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Filter -->
+    <div class="card">
+      <div class="card-title">Filtrar</div>
+      <div id="filter-bar" class="filter-bar">
+        <!-- Se renderiza dinámicamente -->
+        <button class="filter-btn active" data-category="All">Todas</button>
+        <button class="filter-btn" data-category="Food">🍔 Food</button>
+        <button class="filter-btn" data-category="Transport">🚗 Transport</button>
+        <button class="filter-btn" data-category="Entertainment">🎬 Entertainment</button>
+        <button class="filter-btn" data-category="Shopping">🛍️ Shopping</button>
+        <button class="filter-btn" data-category="Other">📦 Other</button>
+      </div>
+    </div>
+
+    <!-- Expense List -->
+    <div class="card">
+      <div class="card-title">Gastos</div>
+      <div id="expense-list" class="expense-list">
+        <!-- Se renderiza dinámicamente -->
+
+        <!-- EJEMPLO SIMULADO (estructura de referencia) -->
+        <div class="expense-item disabled" data-id="1">
+          <div class="expense-left">
+            <div class="expense-icon food">🍔</div>
+            <div>
+              <div class="expense-desc">Supermercado</div>
+              <div class="expense-date">28/01/2026</div>
+            </div>
+          </div>
+          <div class="expense-right">
+            <div class="expense-amount">-$85.00</div>
+            <button class="btn-delete" data-id="1">🗑️</button>
+          </div>
+        </div>
+
+        <div class="expense-item disabled" data-id="2">
+          <div class="expense-left">
+            <div class="expense-icon transport">🚗</div>
+            <div>
+              <div class="expense-desc">Uber</div>
+              <div class="expense-date">27/01/2026</div>
+            </div>
+          </div>
+          <div class="expense-right">
+            <div class="expense-amount">-$35.00</div>
+            <button class="btn-delete" data-id="2">🗑️</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script type="module" src="app.js"></script>
+</body>
+
+</html>
