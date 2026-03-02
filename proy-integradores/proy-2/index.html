@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Recipe Book</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    /* Header */
+    .header {
+      text-align: center;
+      color: white;
+      margin-bottom: 30px;
+    }
+
+    .header h1 {
+      font-size: 2.5rem;
+      margin-bottom: 8px;
+    }
+
+    .header p {
+      opacity: 0.9;
+      font-size: 1rem;
+    }
+
+    /* Search Bar */
+    .search-section {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .search-bar {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+
+    .search-input {
+      flex: 1;
+      padding: 12px 16px;
+      border: 2px solid #e2e8f0;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-family: inherit;
+    }
+
+    .search-input:focus {
+      outline: none;
+      border-color: #667eea;
+    }
+
+    .btn-search {
+      padding: 12px 24px;
+      background: #667eea;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .btn-search:hover {
+      background: #5568d3;
+    }
+
+    .filter-bar {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .filter-btn {
+      padding: 6px 14px;
+      background: #f1f5f9;
+      border: 2px solid #e2e8f0;
+      border-radius: 20px;
+      color: #475569;
+      font-size: 0.875rem;
+      cursor: pointer;
+      font-family: inherit;
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+
+    .filter-btn:hover {
+      border-color: #667eea;
+      color: #667eea;
+    }
+
+    .filter-btn.active {
+      background: #667eea;
+      border-color: #667eea;
+      color: white;
+    }
+
+    /* Add Custom Recipe */
+    .add-custom {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .btn-add-custom {
+      width: 100%;
+      padding: 14px;
+      background: #34d399;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .btn-add-custom:hover {
+      background: #10b981;
+    }
+
+    /* Recipe Grid */
+    .recipe-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    .recipe-card {
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      position: relative;
+    }
+
+    .recipe-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .recipe-image {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+
+    .recipe-body {
+      padding: 16px;
+    }
+
+    .recipe-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #1e293b;
+      margin-bottom: 8px;
+    }
+
+    .recipe-category {
+      display: inline-block;
+      padding: 4px 10px;
+      background: #f1f5f9;
+      color: #64748b;
+      border-radius: 12px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+
+    .recipe-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .recipe-source {
+      font-size: 0.75rem;
+      color: #94a3b8;
+    }
+
+    .btn-favorite {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .btn-favorite:hover {
+      transform: scale(1.2);
+    }
+
+    .btn-favorite.active {
+      color: #ef4444;
+    }
+
+    /* Loading */
+    .loading {
+      text-align: center;
+      padding: 60px 20px;
+      color: white;
+      font-size: 1.2rem;
+    }
+
+    .loading-spinner {
+      display: inline-block;
+      width: 40px;
+      height: 40px;
+      border: 4px solid rgba(255, 255, 255, 0.3);
+      border-top-color: white;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin-bottom: 16px;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    /* Empty State */
+    .empty-state {
+      text-align: center;
+      padding: 60px 20px;
+      background: white;
+      border-radius: 12px;
+      color: #64748b;
+    }
+
+    .empty-state .empty-icon {
+      font-size: 4rem;
+      margin-bottom: 16px;
+    }
+
+    /* Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: 1000;
+      overflow-y: auto;
+      padding: 20px;
+    }
+
+    .modal.active {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-content {
+      background: white;
+      border-radius: 16px;
+      max-width: 700px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      position: relative;
+    }
+
+    .modal-header {
+      position: relative;
+    }
+
+    .modal-image {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+      border-radius: 16px 16px 0 0;
+    }
+
+    .btn-close-modal {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      width: 40px;
+      height: 40px;
+      background: white;
+      border: none;
+      border-radius: 50%;
+      font-size: 1.5rem;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .btn-close-modal:hover {
+      background: #f1f5f9;
+    }
+
+    .modal-body {
+      padding: 24px;
+    }
+
+    .modal-title {
+      font-size: 1.8rem;
+      color: #1e293b;
+      margin-bottom: 8px;
+    }
+
+    .modal-meta {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .modal-section {
+      margin-bottom: 24px;
+    }
+
+    .modal-section h3 {
+      font-size: 1.2rem;
+      color: #334155;
+      margin-bottom: 12px;
+    }
+
+    .ingredient-list {
+      list-style: none;
+    }
+
+    .ingredient-list li {
+      padding: 8px 0;
+      border-bottom: 1px solid #f1f5f9;
+    }
+
+    .ingredient-list li:last-child {
+      border-bottom: none;
+    }
+
+    .instructions {
+      line-height: 1.8;
+      color: #475569;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+
+    <!-- Header -->
+    <div class="header">
+      <h1>🍳 Recipe Book</h1>
+      <p>Descubrí y guardá tus recetas favoritas</p>
+    </div>
+
+    <!-- Search -->
+    <div class="search-section">
+      <div class="search-bar">
+        <input type="text" id="search-input" class="search-input"
+          placeholder="Buscar recetas (ej: chicken, pasta, salad)...">
+        <button id="btn-search" class="btn-search">🔍 Buscar</button>
+      </div>
+
+      <!-- Filters -->
+      <div id="filter-bar" class="filter-bar">
+        <!-- Se renderiza dinámicamente -->
+        <button class="filter-btn active" data-filter="All">Todas</button>
+        <button class="filter-btn" data-filter="Favorites">⭐ Favoritos</button>
+        <button class="filter-btn" data-filter="Custom">📝 Mis Recetas</button>
+      </div>
+    </div>
+
+    <!-- Add Custom Recipe -->
+    <div class="add-custom">
+      <button id="btn-add-custom" class="btn-add-custom">
+        ➕ Agregar Mi Receta
+      </button>
+    </div>
+
+    <!-- Recipe Grid -->
+    <div id="recipe-grid" class="recipe-grid">
+      <!-- Se renderiza dinámicamente -->
+
+      <!-- EJEMPLO de estructura (no funcional) -->
+      <div class="recipe-card" data-id="52772">
+        <img src="https://www.themealdb.com/images/media/meals/wvpsxx1468256321.jpg" alt="Recipe" class="recipe-image">
+        <div class="recipe-body">
+          <h3 class="recipe-title">Teriyaki Chicken</h3>
+          <span class="recipe-category">Chicken</span>
+          <div class="recipe-footer">
+            <span class="recipe-source">TheMealDB</span>
+            <button class="btn-favorite">☆</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Modal de Detalle -->
+  <div id="recipe-modal" class="modal">
+    <div class="modal-content">
+      <!-- Se renderiza dinámicamente -->
+
+      <!-- EJEMPLO de estructura -->
+      <div class="modal-header">
+        <img src="https://www.themealdb.com/images/media/meals/wvpsxx1468256321.jpg" alt="Recipe" class="modal-image">
+        <button class="btn-close-modal">✕</button>
+      </div>
+
+      <div class="modal-body">
+        <h2 class="modal-title">Teriyaki Chicken Casserole</h2>
+        <div class="modal-meta">
+          <span class="recipe-category">Chicken</span>
+          <span class="recipe-source">Japanese</span>
+        </div>
+
+        <div class="modal-section">
+          <h3>Ingredientes</h3>
+          <ul class="ingredient-list">
+            <li>3/4 cup soy sauce</li>
+            <li>1/2 cup water</li>
+            <li>1/4 cup brown sugar</li>
+          </ul>
+        </div>
+
+        <div class="modal-section">
+          <h3>Instrucciones</h3>
+          <p class="instructions">
+            Preheat oven to 350° F. Spray a 9x13-inch baking pan with non-stick spray...
+          </p>
+        </div>
+
+        <button class="btn-favorite">☆ Agregar a Favoritos</button>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="app.js"></script>
+</body>
+
+</html>
