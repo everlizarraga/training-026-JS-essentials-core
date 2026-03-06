@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kanban Board</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #0f172a;
+      color: #e2e8f0;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 1600px;
+      margin: 0 auto;
+    }
+
+    /* Header */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #1e293b;
+    }
+
+    .header h1 {
+      font-size: 1.8rem;
+      color: #fff;
+    }
+
+    .header-controls {
+      display: flex;
+      gap: 12px;
+    }
+
+    .search-box {
+      position: relative;
+    }
+
+    .search-input {
+      padding: 8px 36px 8px 12px;
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 8px;
+      color: #e2e8f0;
+      font-size: 0.9rem;
+      width: 240px;
+    }
+
+    .search-input:focus {
+      outline: none;
+      border-color: #3b82f6;
+    }
+
+    .search-icon {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #64748b;
+    }
+
+    /* Filters */
+    .filters {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .filter-label {
+      padding: 6px 12px;
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .filter-label:hover {
+      border-color: #3b82f6;
+    }
+
+    .filter-label.active {
+      background: #3b82f6;
+      border-color: #3b82f6;
+      color: white;
+    }
+
+    .filter-select {
+      padding: 6px 12px;
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 8px;
+      color: #e2e8f0;
+      font-size: 0.85rem;
+      cursor: pointer;
+    }
+
+    /* Board */
+    .board {
+      display: flex;
+      gap: 16px;
+      overflow-x: auto;
+      padding-bottom: 20px;
+    }
+
+    .board::-webkit-scrollbar {
+      height: 8px;
+    }
+
+    .board::-webkit-scrollbar-track {
+      background: #1e293b;
+      border-radius: 4px;
+    }
+
+    .board::-webkit-scrollbar-thumb {
+      background: #475569;
+      border-radius: 4px;
+    }
+
+    /* Column */
+    .column {
+      flex-shrink: 0;
+      width: 300px;
+      background: #1e293b;
+      border-radius: 12px;
+      padding: 16px;
+    }
+
+    .column-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid #334155;
+    }
+
+    .column-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #f1f5f9;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .column-count {
+      background: #334155;
+      color: #94a3b8;
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    .btn-delete-column {
+      background: none;
+      border: none;
+      color: #64748b;
+      cursor: pointer;
+      font-size: 1rem;
+      padding: 4px;
+      border-radius: 4px;
+    }
+
+    .btn-delete-column:hover {
+      background: #334155;
+      color: #ef4444;
+    }
+
+    /* Tasks */
+    .tasks {
+      min-height: 100px;
+      margin-bottom: 12px;
+    }
+
+    .task-card {
+      background: #0f172a;
+      border: 1px solid #334155;
+      border-radius: 8px;
+      padding: 12px;
+      margin-bottom: 8px;
+      cursor: grab;
+      transition: all 0.2s;
+    }
+
+    .task-card:hover {
+      border-color: #3b82f6;
+      box-shadow: 0 2px 8px rgba(59, 130, 246, 0.2);
+    }
+
+    .task-card.dragging {
+      opacity: 0.5;
+      cursor: grabbing;
+    }
+
+    .task-card.drag-over {
+      border-color: #10b981;
+      border-style: dashed;
+    }
+
+    .task-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: start;
+      margin-bottom: 8px;
+    }
+
+    .task-title {
+      flex: 1;
+      font-size: 0.9rem;
+      color: #f1f5f9;
+      font-weight: 500;
+      line-height: 1.4;
+    }
+
+    .task-title.editing {
+      display: none;
+    }
+
+    .task-title-input {
+      display: none;
+      width: 100%;
+      padding: 4px 8px;
+      background: #1e293b;
+      border: 1px solid #3b82f6;
+      border-radius: 4px;
+      color: #f1f5f9;
+      font-size: 0.9rem;
+      font-family: inherit;
+    }
+
+    .task-title-input.editing {
+      display: block;
+    }
+
+    .task-priority {
+      font-size: 0.75rem;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .task-priority.high {
+      background: #7f1d1d;
+      color: #fca5a5;
+    }
+
+    .task-priority.medium {
+      background: #713f12;
+      color: #fbbf24;
+    }
+
+    .task-priority.low {
+      background: #14532d;
+      color: #86efac;
+    }
+
+    .task-labels {
+      display: flex;
+      gap: 4px;
+      margin-bottom: 8px;
+      flex-wrap: wrap;
+    }
+
+    .task-label {
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-size: 0.7rem;
+      font-weight: 600;
+    }
+
+    .label-bug {
+      background: #7f1d1d;
+      color: #fca5a5;
+    }
+
+    .label-feature {
+      background: #1e3a8a;
+      color: #93c5fd;
+    }
+
+    .label-enhancement {
+      background: #312e81;
+      color: #c4b5fd;
+    }
+
+    .label-documentation {
+      background: #14532d;
+      color: #86efac;
+    }
+
+    .task-footer {
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .btn-delete-task {
+      background: none;
+      border: none;
+      color: #64748b;
+      cursor: pointer;
+      font-size: 0.85rem;
+      padding: 4px;
+    }
+
+    .btn-delete-task:hover {
+      color: #ef4444;
+    }
+
+    /* Add buttons */
+    .btn-add-task {
+      width: 100%;
+      padding: 10px;
+      background: #334155;
+      border: none;
+      border-radius: 8px;
+      color: #94a3b8;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-add-task:hover {
+      background: #3b82f6;
+      color: white;
+    }
+
+    .btn-add-column {
+      flex-shrink: 0;
+      width: 300px;
+      height: 120px;
+      background: #1e293b;
+      border: 2px dashed #334155;
+      border-radius: 12px;
+      color: #64748b;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+    }
+
+    .btn-add-column:hover {
+      border-color: #3b82f6;
+      color: #3b82f6;
+    }
+
+    /* Empty state */
+    .empty-state {
+      text-align: center;
+      padding: 60px 20px;
+      color: #64748b;
+    }
+
+    .empty-icon {
+      font-size: 3rem;
+      margin-bottom: 16px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+
+    <!-- Header -->
+    <div class="header">
+      <h1>📋 Kanban Board</h1>
+      <div class="header-controls">
+        <div class="search-box">
+          <input type="text" id="search-input" class="search-input" placeholder="Buscar tasks...">
+          <span class="search-icon">🔍</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Filters -->
+    <div id="filters" class="filters">
+      <!-- Se renderiza dinámicamente -->
+      <div class="filter-label active" data-label="all">Todas</div>
+      <div class="filter-label" data-label="bug">🐛 Bug</div>
+      <div class="filter-label" data-label="feature">✨ Feature</div>
+      <select id="priority-filter" class="filter-select">
+        <option value="all">Todas las prioridades</option>
+        <option value="high">🔴 High</option>
+        <option value="medium">🟡 Medium</option>
+        <option value="low">🟢 Low</option>
+      </select>
+    </div>
+
+    <!-- Board -->
+    <div id="board" class="board">
+      <!-- Se renderiza dinámicamente -->
+
+      <!-- EJEMPLO de estructura (no funcional) -->
+      <div class="column" data-id="col-1">
+        <div class="column-header">
+          <div class="column-title">
+            To Do
+            <span class="column-count">3</span>
+          </div>
+          <button class="btn-delete-column">🗑️</button>
+        </div>
+
+        <div class="tasks" data-column-id="col-1">
+          <!-- Task 1 -->
+          <div class="task-card" draggable="true" data-id="task-1">
+            <div class="task-header">
+              <div class="task-title">Fix login bug</div>
+              <input type="text" class="task-title-input" value="XD">
+              <span class="task-priority high">High</span>
+            </div>
+            <div class="task-labels">
+              <span class="task-label label-bug">bug</span>
+            </div>
+            <div class="task-footer">
+              <button class="btn-delete-task">🗑️</button>
+            </div>
+          </div>
+
+          <!-- Task 2 -->
+          <div class="task-card" draggable="true" data-id="task-2">
+            <div class="task-header">
+              <div class="task-title">Add dark mode</div>
+              <span class="task-priority medium">Med</span>
+            </div>
+            <div class="task-labels">
+              <span class="task-label label-feature">feature</span>
+            </div>
+            <div class="task-footer">
+              <button class="btn-delete-task">🗑️</button>
+            </div>
+          </div>
+        </div>
+
+        <button class="btn-add-task">➕ Add Task</button>
+      </div>
+
+      <!-- Add Column Button -->
+      <button id="btn-add-column" class="btn-add-column">
+        ➕ Add Column
+      </button>
+    </div>
+
+  </div>
+
+  <script type="module" src="app.js"></script>
+</body>
+
+</html>
