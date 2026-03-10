@@ -54,6 +54,11 @@ export class ChatController {
       this.searchMessages(query);
     });
 
+    // Add Reaction
+    this.view.onAddReaction((messageId) => {
+      this.addReaction(messageId);
+    });
+
     this.load();
     this.updateView();
   }
@@ -232,6 +237,22 @@ export class ChatController {
 
     // Agregar mensaje de bienvenida
     this.model.sendMessage('Welcome to ChatApp! 👋');
+  }
+
+  /**
+ * Agregar nueva reaction a mensaje
+ * @param {string} messageId
+ */
+  addReaction(messageId) {
+    // Lista de emojis comunes
+    const emoji = prompt('Choose emoji:\n👍 ❤️ 😂 🎉 😮 😢 🔥 ✅ ❌\n\nEnter emoji:');
+
+    if (!emoji || emoji.trim() === '') {
+      return; // Usuario canceló
+    }
+
+    // Toggle reaction (model maneja si ya existe o no)
+    this.model.toggleReaction(messageId, emoji.trim());
   }
 
   // ==========================================

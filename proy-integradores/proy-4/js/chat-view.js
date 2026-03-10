@@ -93,8 +93,6 @@ export class ChatView {
     // - level determina indentación (thread depth)
 
     const contentHtml = this.parseMarkdown(message.content);
-
-    // Formatear timestamp
     const time = this.formatTime(message.timestamp);
 
     // Renderizar reactions
@@ -104,7 +102,7 @@ export class ChatView {
 
     // Botón de eliminar (solo si es mensaje del usuario actual)
     const deleteBtn = message.userId === currentUserId
-      ? '<button class="btn-delete-msg">🗑️</button>'
+      ? '<button class="btn-delete-msg" data-message-id="${message.id}">🗑️</button>'
       : '';
 
     // Indentación para threads
@@ -119,42 +117,47 @@ export class ChatView {
         : `▶ ${message.replies.length} ${message.replies.length === 1 ? 'reply' : 'replies'}`;
 
       threadHtml = `
-        <button class="thread-toggle" data-message-id="${message.id}">
-          ${toggleText}
-        </button>
-      `;
+      <button class="thread-toggle" data-message-id="${message.id}">
+        ${toggleText}
+      </button>
+    `;
 
-      // Si está expandido, renderizar replies recursivamente
       if (isExpanded) {
         const repliesHtml = message.replies
           .map(reply => this.renderMessage(reply, currentUserId, level + 1))
           .join('');
 
         threadHtml += `
-          <div class="thread">
-            ${repliesHtml}
-          </div>
-        `;
+        <div class="thread">
+          ${repliesHtml}
+        </div>
+      `;
       }
     }
 
     return `
-      <div class="message" data-id="${message.id}" style="${indent}">
-        <div class="message-header">
-          <span class="message-author">@${this.escapeHtml(message.userName)}</span>
-          <span class="message-time">${time}</span>
-        </div>
-        <div class="message-content">
-          ${contentHtml}
-        </div>
-        <div class="message-footer">
-          ${reactionsHtml ? `<div class="reactions">${reactionsHtml}</div>` : ''}
-          <button class="btn-reply" data-message-id="${message.id}">💬 Reply</button>
-          ${deleteBtn}
-        </div>
-        ${threadHtml}
+    <div class="message" data-id="${message.id}" style="${indent}">
+      <div class="message-header">
+        <span class="message-author">@${this.escapeHtml(message.userName)}</span>
+        <span class="message-time">${time}</span>
       </div>
-    `;
+      <div class="message-content">
+        ${contentHtml}
+      </div>
+      <div class="message-footer">
+        <div class="reactions">
+          ${reactionsHtml}
+          <!-- ⭐ AGREGAR BOTÓN ➕ -->
+          <button class="btn-add-reaction" data-message-id="${message.id}" title="Add reaction">
+            ➕
+          </button>
+        </div>
+        <button class="btn-reply" data-message-id="${message.id}">💬 Reply</button>
+        ${deleteBtn}
+      </div>
+      ${threadHtml}
+    </div>
+  `;
   }
 
   /**
@@ -380,7 +383,7 @@ export class ChatView {
     this.messagesArea.addEventListener('click', (e) => {
       const btnReply = e.target.closest('.btn-reply');
       if (!btnReply) return;
-      
+
       const messageId = btnReply.dataset.messageId;
       callback(messageId);
     });
@@ -395,10 +398,10 @@ export class ChatView {
     this.messagesArea.addEventListener('click', (e) => {
       const btnDelete = e.target.closest('.btn-delete-msg');
       if (!btnDelete) return;
-      
+
       const message = btnDelete.closest('.message');
       if (!message) return;
-      
+
       const messageId = message.dataset.id;
       callback(messageId);
     });
@@ -413,13 +416,13 @@ export class ChatView {
     this.messagesArea.addEventListener('click', (e) => {
       const reaction = e.target.closest('.reaction');
       if (!reaction) return;
-      
+
       const message = reaction.closest('.message');
       if (!message) return;
-      
+
       const messageId = message.dataset.id;
       const emoji = reaction.dataset.emoji;
-      
+
       callback(messageId, emoji);
     });
   }
@@ -433,7 +436,7 @@ export class ChatView {
     this.messagesArea.addEventListener('click', (e) => {
       const btnToggle = e.target.closest('.thread-toggle');
       if (!btnToggle) return;
-      
+
       const messageId = btnToggle.dataset.messageId;
       callback(messageId);
     });
@@ -446,14 +449,28 @@ export class ChatView {
   onSearch(callback) {
     // TODO: Input en search-input con debounce
     let timeoutId = null;
-    
+
     this.searchInput.addEventListener('input', () => {
       clearTimeout(timeoutId);
-      
+
       timeoutId = setTimeout(() => {
         const query = this.searchInput.value.trim();
         callback(query);
       }, 300); // 300ms debounce
+    });
+  }
+
+  /**
+ * Listener: Click en botón "Add Reaction"
+ * @param {function(string): void} callback - Recibe messageId
+ */
+  onAddReaction(callback) {
+    this.messagesArea.addEventListener('click', (e) => {
+      const btnAdd = e.target.closest('.btn-add-reaction');
+      if (!btnAdd) return;
+
+      const messageId = btnAdd.dataset.messageId;
+      callback(messageId);
     });
   }
 }
